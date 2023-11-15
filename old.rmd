@@ -1,0 +1,317 @@
+---
+title: "Social Network Analysis about the subreddit /r/Place2023"
+author: "Mehmet Karacaa"
+date: "27.10.2023"
+---
+
+### Introduction ###
+
+#Installieren der benötigten Packages
+install.packages("tidyverse")
+install.packages("igraph")
+install.packages("ggraph")
+install.packages("ggplot2")
+install.packages("igraphdata")
+
+#Laden der benötigten Packages
+library(tidyverse)
+library(igraph)
+library(ggraph)
+library(ggplot2)
+library(igraphdata)
+
+
+
+
+```{r}
+
+#Laden der Daten von  /Users/karaca/src/Social_Network_Analysis/Datensatz/2023_place_canvas_20072023.csv
+data <- read.csv("/Users/karaca/src/Social_Network_Analysis/Datensatz/2023_place_canvas_20072023.csv", sep = ",")
+
+#csv Datei in ein Dataframe umwandeln
+data <- as.data.frame(data)
+
+#Anzeigen der ersten 6 Zeilen
+head(data)
+
+#Anzeigen der Struktur der Daten
+str(data)
+
+```
+
+install.packages("igraph")
+library(igraph)
+```
+
+
+install.packages(ggplot2)
+library(ggplot2)
+
+
+
+Da der Datensatz geladen worden ist, möchten wir diesen analysieren. Hierfür müssen wir uns einen Überblick der Daten machen
+```{r}
+#Zuerst lassen wir uns den höchsten und niedrigsten Wert von timestamp anzeigen
+max(data$timestamp)
+min(data$timestamp)
+
+#Als nächstes schauen wir uns an, wie viele einzigartige Werte es in der Spalte user gibt. Dies gibt uns die Anzahl an Usern an, da manche User mehrere Einträge haben.
+length(unique(data$user))
+````
+
+Der Datensatz wurde im Zeitraum von 13:00:26 bis 15:59:59 aufgenommen. In diesem Zeitraum haben 739675 User insgesamt 2411941 Pixel gesetzt. 
+Die Pixel Color wurde als int Wert gespeichert, durch die Vorverarbeitung des Datensatzes. Die Zahlen haben einen bestimmten Schlüssel für die Farben.
+Tabelle der Farben
+rot = #ff4500 = 1
+orange = #ffa800 = 2
+gelb = #ffd635  = 3
+grün = #00a368 = 4
+blau = #3690ea = 5
+lila = #b44ac0 = 6
+schwarz = #000000 = 7
+weiß = #ffffff = 8
+```{r}
+#Diese Farben nutzen wir um einene Farbzuordnungstabelle zu erstellen
+farbzuordnung <- c("#ff4500", "#ffa800", "#ffd635", "#00a368", "#3690ea", "#b44ac0", "#000000", "#ffffff")
+```
+
+Als nächstes zeigen wir uns die maximal und minmalwerte von x und y anzeigen, um einen Eindruck des Koordinatensystems zu bekommen.
+```{r}
+max(data$x)
+min(data$x)
+max(data$y)
+min(data$y)
+```
+Das Koordinatensystem auf der X-Achse und Y-Achse geht von 499 bis -500.
+
+Als ersten Schritt wollen wir die Daten mit einem Scatterplot visualisieren. Hierfür erstellen wir ein Subset, welches nur aus den Koordinatenpaaren besteht.
+```{r}
+#Erstelle einen Subset, welcher nur aus den Koordinatenpaaren besteht
+Koordinaten_subset_x_und_y <- data[,c("x", "y")]
+
+#Diesen Subset wollen wir uns anschauen und plotten diesen auf einem Scatterplot
+plot(Koordinaten_subset_x_und_y$x, Koordinaten_subset_x_und_y$y, xlab = "X-Achse", ylab = "Y-Achse")
+```
+An dem Plot erkennt man, das beinahe alle Koordinaten mit einem pixel belegt worden sind. Es gibt nur vereinzelte Ausnahmen, die nicht belegt worden sind. 
+Aus dem Plot konnte keine Erkenntnisse gezogen werden. Daher soll im nächsten Schritt die Punkte farbig visualisiert werden, um bestimmte Muster erkennen zu können.
+Hierzu erstellen wir einen neuen Subset, welcher aus den Koordinatenpaaren und dem pixelcolor besteht.
+Diesen subset wollen wir uns anschauen und plotten diesen auf einem Scatterplot mit der Farbe des pixel_color.
+Die Farben sind in der Tabelle der Farben oben beschrieben.
+```{r}
+#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren und dem pixelcolor besteht
+Koordinaten_subset_x_y_pixelcolor <- data.frame(x=data$x, y=data$y, pixel_color=data$pixel_color)
+
+#Diesen Subset wollen wir uns anschauen und plotten diesen auf einem Scatterplot mit der Farbe des pixelcolors
+plot(Koordinaten_subset_x_y_pixelcolor$x, Koordinaten_subset_x_y_pixelcolor$y, col = farbzuordnung[Koordinaten_subset_x_y_pixelcolor$pixel_color] ,pch=15, xlab = "X-Achse", ylab = "Y-Achse")
+```
+Durch diese Darstellung ist nun zu erkennen, dass es bestimmte Farbmuster gibt.
+Beispielsweise sind erste Flaggen zu erkennen wie die Französische (links), die Deutsche (links unten), türkische, indische, italienische
+Allerdings haben wir ein Problem bei dieser Visualisierung, da viele Punkte doppelt vorkommen. Dies liegt daran, dass viele User mehrere Pixel gesetzt haben.
+Deswegen möchten wir nur die letzten Pixel setzen lassen. Hierfür erstellen wir einen neuen Subset. In diesem subset gibt es keine doppelten Koordinatenpaare.
+```{r}
+#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren, dem Pixel_color und einer neuen Spalte besteht, welches zusammengesetz wird aus den Koordinatenpaaren x und y
+Koordinaten_subset_x_y_pixelcolor2 <- data.frame(x=data$x, y=data$y, pixel_color=data$pixel_color)
+Koordinaten_subset_x_y_pixelcolor2$xy <- paste(Koordinaten_subset_x_y_pixelcolor2$x, Koordinaten_subset_x_y_pixelcolor2$y, sep = "|")
+#Drucke die ersten 5 Zeilen von Koordinaten_subset_x_y_pixelcolor
+head(Koordinaten_subset_x_y_pixelcolor2, 5)
+#Entfernen von duplikaten, welche nur in der Spalte xy vorkommen
+Koordinaten_subset_x_y_pixelcolor2 <- Koordinaten_subset_x_y_pixelcolor2[!duplicated(Koordinaten_subset_x_y_pixelcolor2$xy),]
+
+#Diesen subset wollen wir uns anschauen und plotten diesen auf einem Scatterplot mit der Farbe des pixelcolors.
+plot(Koordinaten_subset_x_y_pixelcolor2$x, Koordinaten_subset_x_y_pixelcolor2$y, col = farbzuordnung[Koordinaten_subset_x_y_pixelcolor2$pixel_color] ,pch=15, xlab = "X-Achse", ylab = "Y-Achse")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+#Erstelle einen Subset, welcher nur aus den Koordinatenpaaren besteht
+Koordinaten_subset <- data[,c("x", "y")]
+Koordinaten_subset
+```
+
+```{r}
+#Fasse doppelte Koordinatenpaare zusammen. Im Anschluss soll die Häufigkeit der Paare in einer neuen Spalte angezeigt werden. Diese Spalte soll "Häufigkeit" heißen und nur einen integer Wert enthalten.
+Koordinaten_subset <- aggregate(Koordinaten_subset, by = list(Koordinaten_subset$x, Koordinaten_subset$y), FUN = length)
+Koordinaten_subset
+```
+
+```{r}
+
+#Zeige die Spaltennamen von kooridnaten_subset an
+colnames(Koordinaten_subset)
+
+#Lösche die 4 Spalte von Koordinaten_subset
+Koordinaten_subset <- Koordinaten_subset[,c(1,2,3)]
+
+#Benenne die Spalten um
+colnames(Koordinaten_subset) <- c("x", "y", "Häufigkeit")
+
+#Maximum und Minimum der Häufigkeiten anzeigen
+max(Koordinaten_subset$Häufigkeit)
+min(Koordinaten_subset$Häufigkeit)
+
+#Gib die Anzahl der Koordinatenpaare aus
+nrow(Koordinaten_subset)
+
+#Gib die größten und kleinsten Werte von X und Y aus (auch negative Werte)
+max(Koordinaten_subset$x)
+min(Koordinaten_subset$x)
+max(Koordinaten_subset$y)
+min(Koordinaten_subset$y)
+
+```
+
+```{r}
+
+#Erstelle eine Adjacency Matrix mit den Koordinatenpaaren X und Y aus Koordinaten_subset
+Koordinaten_subset_adjacency <- get.adjacency(graph_from_data_frame(Koordinaten_subset[,c("x", "y")]))
+Koordinaten_subset_adjacency
+
+Koordinaten_subset_adjacency <- as.matrix(Koordinaten_subset_adjacency)
+
+#Erstelle eine Heatmap aus der koordinaten_subset_adjacency
+heatmap(Koordinaten_subset_adjacency, col = heat.colors(100), margins = c(10, 10),scale = "none", Rowv = NA, Colv = NA, xlab = "X-Achse", ylab = "Y-Achse")
+
+
+
+#Erstelle eine Heatmap aus der koordinaten_subset_adjacency mit der Farbskala Colors
+heatmap(Koordinaten_subset_adjacency, col = Colors, margins = c(10, 10), scale = "none", Rowv = NA, Colv = NA, xlab = "X-Achse", ylab = "Y-Achse")
+
+```
+
+```{r}
+# Convert Koordinaten_subset_adjacency to a data frame
+Koordinaten_subset_df <- as.data.frame(Koordinaten_subset_adjacency)
+
+# Get row and column names for labeling the heatmap
+row_names <- rownames(Koordinaten_subset_df)
+col_names <- colnames(Koordinaten_subset_df)
+
+# Melt the data frame for ggplot2 visualization
+melted_data <- reshape2::melt(Koordinaten_subset_df)
+
+# Create a heatmap using ggplot2
+ggplot(melted_data, aes(x = Var2, y = Var1, fill = value)) +
+  geom_raster() +
+  scale_fill_gradient2(low = "navy", mid = "white", high = "red",
+                       midpoint = mean(melted_data$value),
+                       limits = range(melted_data$value)) +
+  scale_x_discrete(labels = col_names) +
+  scale_y_discrete(labels = row_names) +
+  theme_minimal() +
+  labs(x = "X-Achse", y = "Y-Achse", fill = "Values")
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+```
+
+```{r}
+```
+
+```{r}
+
+```
+
+```{r}
+#subsetdaten beinhaltet nur die Spalten "user" und "coordinate" von data
+subsetdaten <- data[,c("user", "x", "y")]
+
+#Die Spalte x gibt die Werte auf der X Achse an
+#Die Spalte y gibt die Werte auf der Y Achse an
+
+#Erstelle ein Koordinatensystem indem die x und y Werte der Spalten x und y von subsetdaten verwendet werden
+plot(subsetdaten$x, subsetdaten$y, xlab = "X-Achse", ylab = "Y-Achse")
+
+#Zähle die Häufigkeit jedes Koordinatenpaars
+koordinaten_häufigkeit <- table(subsetdaten$x, subsetdaten$y)
+
+# Berechne den Farbindex für die Koordinatenpaare basierend auf der relativen Häufigkeit
+max_häufigkeit <- max(koordinaten_häufigkeit)
+min_häufigkeit <- min(koordinaten_häufigkeit)
+max_häufigkeit
+min_häufigkeit
+subsetdaten
+# Farbskala erstellen (je höher die Häufigkeit, desto roter die Farbe)
+farbskala <- heat.colors(max_häufigkeit - min_häufigkeit + 1)
+
+# Bestimme den Farbindex für jedes Koordinatenpaar basierend auf der Häufigkeit
+farbindex <- koordinaten_häufigkeit - min_häufigkeit + 1
+
+#Zeichne die Koordinatenpaare mit der jeweiligen Farbe
+points(subsetdaten$x, subsetdaten$y, col = farbskala[farbindex], pch = 16)
+
+```
+
+```{r}
+
+#Erstelle eine Adjacency Matrix mit den Koordinatenpaaren X und Y aus subsetdaten
+Visualisierung <- get.adjacency(graph_from_data_frame(subsetdaten[,c("x", "y")]))
+
+ColorsVisual <- colorRampPalette(c("white", "red"))
+
+heatmap(Visualisierung, col = ColorsVisual(100), margins = c(10, 10),scale = "none", Rowv = NA, Colv = NA, xlab = "X-Achse", ylab = "Y-Achse")
+
+```
+
+```{r}
+
+
+
+```
+
+
+
+```{r}
+#Gebe die max_häufigkeit  und min häufigkeit aus
+max_häufigkeit
+min_häufigkeit
+
+# Gib die Tabelle der Häufigkeiten aus
+print(koordinaten_häufigkeit)
+```
+
+```{r}
+# Koordinatenpaare erstellen, indem X- und Y-Werte zusammengeführt werden
+koordinaten <- paste(subsetdaten$x, subsetdaten$y, sep = "-")
+
+# Zähle die Häufigkeit jedes Koordinatenpaars
+koordinaten_häufigkeit <- table(koordinaten)
+```
+
+```{r}
+# Balkendiagramm für die Häufigkeiten erstellen
+barplot(koordinaten_häufigkeit, xlab = "X-Achse", ylab = "Y-Achse", main = "Häufigkeit der Koordinatenpaare")
+
+#Zeige mir die ersten 5 Zeilen von kooridnaten_häufigkeit an
+head(koordinaten_häufigkeit, 5)
+
+```
+
+```{r}
+#Erstellen einer neuen Spalte XY mit den Koordinatenpaaren
+data$XY <- paste(data$x, data$y, sep = "|")
+
+#Gebe die ersten 5 Zeilen von XY an
+head(data$XY, 5)
+```
