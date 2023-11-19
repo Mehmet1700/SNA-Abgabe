@@ -1,5 +1,5 @@
 ---
-title: "Social Network Analysis about the subreddit Event /r/Place2023"
+title: "Social Network Analysis über die subreddit Veranstaltung /r/Place2023"
 author: "Mehmet Karaca"
 date: "27.10.2023"
 output:
@@ -22,12 +22,34 @@ editor_options:
 
 # Einleitung {#sec-einleitung}
 
+Auf der Social Media "Reddit" gibt es sogenannte Subreddits, welche bestimmte Foren zu bestimmten Themen sind.
+Eines dieser Subreddits ist das Subreddit "Place". Die Abkürzung /r/ steht als Abkürzung für ein Subreddit.
+Dieses bestimmte subreddit ist ein besonderes, da es nur für einen bestimmten Zeitraum existiert und jährlich stattfindet.
+Das erste mal fand das Event 2017 statt und war als Aprilscherz gedacht. Am 1.April 2022 wurde das Event wiederholt und fand zum zweiten mal statt.
+Die letzte Veranstaltung fand vom 20.07.2023 bis zum 25.07.2023 statt.
+
+Des Weiteren gibt es eine weitere Besonderheit. In der Regel ist es in subreddits nur möglich Beträge in Form von Bildern, Videos oder Texten zu posten.
+In diesem Subreddit ist es möglich Pixel auf einer Leinwand zu platzieren. Dabei können die Nutzer aus einer Palette an Farben auswählen.
+Allerdings können die Nutzer die Pixel nur nach ablauf einer bestimmten Zeit setzen. Diese Zeit beträgt zwischen 5 und 20 Minuten.
+Dadurch ist ist schwierig als einzelner Nutzer ein Bild zu erstellen, da andere Nutzer die Pixel überschreiben können.
+Es ist Teamwork gefragt, um ein Bild zu erstellen. Dieses Subreddit ist sozusagen soziales Experiment, welches die Nutzer dazu anregen soll, gemeinsam etwas zu erstellen.
+Die Nutzer können sich absprechen und gemeinsam ein Bild erstellen. Dieses Bild kann ein Logo, eine Flagge oder ein Muster sein.
+
+Für diese Arbeit wurde der Datensatz der letzten Veranstaltung aus dem Jahr 2023 verwendet. 
+Die Daten wurden von der Webseite https://www.reddit.com/r/place/comments/15bjm5o/rplace_2023_data/ heruntergeladen.
+
+Die Motivation für die Arbeit ist, dass es interessant ist zu untersuchen, wie die Nutzer sich verhalten und wie sie sich absprechen.
+Außerdem ist es interessant zu untersuchen, wie die Beziehungen zwischen den Nutzern sind und wie die Nutzer sich verhalten.
+
 ## Forschungsfragen: {#sec-forschungsfragen}
 
+Welche Muster sind in welchen Bereichen zu erkennen?
+Welche Bereiche der Leinwand wurden besonders oft gefüllt?
+Welche Nutzer waren besonders aktiv und welche Farben haben sie genutzt?
+Welche Bereiche haben die aktivsten Nutzer besonders oft gefüllt?
+Gibt es generell Beziehungen zwischen den Nutzern?
+
 ## Verwendete Librarys {#sec-verwendete-librarys}
-
-
-
 #Installieren der benötigten Packages
 install.packages("tidyverse")
 install.packages("igraph")
@@ -44,12 +66,40 @@ library(igraphdata)
 
 ## Datenaufbereitung
 
-Python Datenaufbereitugn erklären
+Wie bereits erwähnt, wurde der Datensatz von der Webseite auf Reddit bereitgestellt.
+Die Daten liegen als .csv Datei vor und sind sehr groß. Die Verarbeitung der Daten ist sehr aufwendig.
+Daher wurde ein Kompromiss nach Absprache mit der Dozentin getroffen.
+Es wird ein Ausschnitt des Datensatzes verwendet, um die Größe des Datensatzes zu reduzieren.
+Darüber hinaus wurde der Datensatz vorverarbeitet, um die Daten zu vereinfachen und die Verarbeitung zu beschleunigen.
+Die Vorverarbeitung wurde mit Python durchgeführt. Hierfür wurde ein Skript geschrieben, welches die Daten vorverarbeitet.
+Das Skript ist in der Abgabe beigefügt. Die Vorverarbeitung wurde mit Python durchgeführt, da die Verarbeitung mit R sehr lange gedauert hat.
+Darüber hinaus wurde die Library Pandas verwendet, welche sehr gut für die Verarbeitung von Daten geeignet ist.
+
+Die Vorgehensweise der Vorverarbeitung ist wie folgt:
+1. Es wurde eine Liste erstellt, welche die betroffenen Dateien enthält.
+2. Mithilfe einer Schleife wurde jede Datei aus der Liste geöffnet und in ein Dataframe umgewandelt.
+3. Jedes der Dataframes wurde mit der Funktion standardize_data vorverarbeitet.
+4. In der Funktion wurde die Spalte timestamp angepasst, sodass es die Uhrzeit als int Wert enthält.
+5. Die Datensätze wurden gefiltert, sodass nur die Daten zwischen 00:00:00 und 15:59:59 enthalten sind.
+6. Die Spalte pixel_color (hexadezimalzahl) wurde angepasst, sodass es die Farben als int Wert enthält. 
+7. Fehlerwerte in den Spalten x und y wurden entfernt.
+8. Die Spalten x und y wurden angepasst, sodass die Koordinaten als int Wert enthalten.
+9. Die Werte in der Spalte user wurden pseudonymisiert, sodass die Nutzer anonym bleiben.
+10. Der verarbeitete Datensatz wird zurückgegeben und alle Dataframes werden in einem zusammenhängendne Dataframe gespeichert.
+11. Die Informationen zu dem neuen Dataframe werden ausgegeben
+12. Der fertige Dataframe wird als neue .csv Datei als 2023_place_canvas_20072023.csv gespeichert.
+
 
 # Datenanalyse und Auswertung {#sec-datenanalyse-und-auswertung}
 
-## Erster Überblick über den Datensatz
+Dieser Datensatz wird nun in R geladen und für die weitere Analyse verwendet.
+Die Daten werden in einem Dataframe gespeichert und anschließend werden die Daten untersucht.
+Es werden erste Tests durchgeführt, um einen Überblick über die Daten zu bekommen.
+Hierzu werden libraries wie tidyverse, igraph, ggplot2 und dplyr verwendet. 
+Anschließend werden die Daten visualisiert, um weitere Erkenntnisse zu gewinnen.
 
+
+## Erster Überblick über den Datensatz
 
 ```{r}
 #Laden der Daten von  /Users/karaca/src/Social_Network_Analysis/Datensatz/2023_place_canvas_20072023.csv
@@ -58,21 +108,21 @@ data <- read.csv("Datensatz/2023_place_canvas_20072023.csv", sep = ",")
 #csv Datei in ein Dataframe umwandeln
 data <- as.data.frame(data)
 
-#Anzeigen der ersten 6 Zeilen
-head(data)
+#Anzeigen der ersten 6 Zeilen zum testen
+#head(data)
 
 #Anzeigen der Struktur der Daten
-str(data)
+#str(data)
 
 ```
 
 ```{r}
 #install.packages("igraph")
-library(igraph)
+#library(igraph)
 
 # Tidyverse ist eine Sammlung von Tools für die Transformation und Visualisierung von Daten, z. B. dplyr, ggplot2, tidyr etc.
 #install.packages("tidyverse")
-library(tidyverse)
+#library(tidyverse)
 
 #install.packages(ggplot2)
 #library(ggplot2)
@@ -81,11 +131,9 @@ library(tidyverse)
 #library(dplyr)
 ```
 
-
-
-Da der Datensatz geladen worden ist, möchten wir diesen analysieren. Hierfür müssen wir uns einen Überblick der Daten machen
+Da der Datensatz geladen worden ist, führen wir nun erste Tests durch, um einen Überblick über die Daten zu bekommen.
 ```{r}
-#Zuerst lassen wir uns den höchsten und niedrigsten Wert von timestamp anzeigen
+#Zuerst lassen wir uns den höchsten und niedrigsten Wert von timestamp anzeigen um einen Überblick über die Zeit zu bekommen.
 max(data$timestamp)
 min(data$timestamp)
 
@@ -119,14 +167,18 @@ max(data$y)
 min(data$y)
 ```
 Das Koordinatensystem erstreckt sich von -500 bis 499 entlang sowohl der X-Achse als auch der Y-Achse.
-Als ersten Schritt wollen wir die Daten mit einem Plot visualisieren, um einen Eindruck der Daten zu bekommen.
+Wie bereits erwähnt ist die Leinwand 1000x1000 Pixel groß und passt somit zu dem Koordinatensystem.
+Der Nullpunkt 0|0 befindet sich in der Mitte des Koordinatensystems.
+
+Als nächsten Schritt wollen wir die Daten mit einem Plot visualisieren, um einen Eindruck der Daten zu bekommen.
 Hierfür erstellen wir ein Subset, welches nur aus den Koordinatenpaaren besteht.
 ```{r}
 #Erstelle einen Subset, welcher nur aus den Koordinatenpaaren besteht
 Koordinaten_subset_x_und_y <- data[,c("x", "y")]
 
 #Diesen Subset wollen wir uns anschauen und plotten diesen in einem Scatterplot.
-plot(Koordinaten_subset_x_und_y$x, Koordinaten_subset_x_und_y$y, xlab = "X-Achse", ylab = "Y-Achse")
+#plot(Koordinaten_subset_x_und_y$x, Koordinaten_subset_x_und_y$y, xlab = "X-Achse", ylab = "Y-Achse")
+#Aus Erkenntniss Gründen wurde der Plot auskommentiert, da dieser nur ein schwarzes Feld darstellt.
 ```
 <br> <br>
 
@@ -171,8 +223,6 @@ ggplot(Koordinaten_subset_eindeutig, aes(x, y, col = farbzuordnung[pixel_color])
 ```
 
 <br> <br>
-
-
 
 Diese Darstellung ist die präzisteste Darstellung, die wir erstellen konnten. Es ist zu erkennen, dass die Flaggen deutlicher zu erkennen sind.
 Außerdem sind Sätze, Wörter und Logos zu erkennen. Aber auch Andeutung von Bildern wie z.B. ein blauer Elefant und ein "Pikachu" nut Sonnenbrille (Ein Pokemon aus dem gleichnamigen Spiel) sind der unteren rechten Ecke ist zu erkennen.
@@ -333,26 +383,248 @@ Besonders auffällig ist der vertikale blaue Streifen auf der linken Seite der H
 ## Untersuchung der Hauptakteure (Stehen die Hauptakteure in Beziehung zu einandner?)
 Da nun ein grober Überblick der gesamten Daten und des Koordinatensystems vorhanden ist, soll nun untersucht werden, welche User die Hauptakteure sind.
 Hierfür erstellen wir einen neuen Subset, welcher aus den Koordinatenpaaren, dem pixelcolor, dem timestamp und dem user besteht.
-Diesen Subset filtern wir nach den Top 20 Usern, welche die meisten Pixel gesetzt haben.
+Diesen Subset filtern wir nach den Top 10 Usern, welche die meisten Pixel gesetzt haben.
+Dieser Subset ist die Grundlage für die weiteren Untersuchungen zu den Pixel_Farben und den Koordinatenpaaren.
 ```{r}
 #Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren, dem pixelcolor, dem timestamp und dem user besteht
-Top20User <- data.frame(x=data$x, y=data$y, pixel_color=data$pixel_color, timestamp=data$timestamp, user=data$user)
+Top10User <- data.frame(x=data$x, y=data$y, pixel_color=data$pixel_color, timestamp=data$timestamp, user=data$user)
 
-#Filtern des Subsets nach den Top 20 Usern, welche die meisten Pixel gesetzt haben
-Top20User <- Top20User %>% group_by(user) %>% summarise(count = n()) %>% arrange(desc(count)) %>% head(20)
+# Filtern des Subsets nach den Top 10 Usern, 
+#welche die meisten Pixel gesetzt haben
+Top10User <- data %>% group_by(user) %>% summarise(count = n()) %>% arrange(desc(count)) %>% head(10)
 
-#Anzeigen der Top20 User
-print(Top20User)
+# Filtern des ursprünglichen Dataframes nach den Top 20 Usern
+Top10User <- data %>% filter(user %in% Top10User$user)
+
+#Anzeigen der Spalten von Top10User
+#colnames(Top10User)
+#Top10User
+
+#printe die einzigartigen User zum testen
+#unique(Top10User$user)
+
+#printe die einzigartigen Farben zum testen
+#unique(Top10User$pixel_color)
+
 ```
 
-Die Beziehungen der Top20 User möchten wir näher untersuchen, um zu schauen, ob es bestimmte Beziehungen zwischen den Usern gibt.
-Außerdem soll die Präferenz der Farben der Top20 User untersucht werden.
-Hierfür erstellen wir einen neuen Subset, welcher aus den Koordinatenpaaren, dem pixelcolor, dem timestamp und dem user besteht.
-Diesen Subset filtern wir nach den Top 20 Usern, welche die meisten Pixel gesetzt haben.
-Für die Untersuchung wird die library iGraph genutzt und wandeln den Dataframe in einen iGraph-Objekt.
+<br> <br>
+
+
+### Untersuchung der Beziehung der Top10 User im Kontext der Farben
+Als nächstes wollen wir untersuchen, welche Farben die Top 10 User gesetzt haben und wie diese in Verbindung stehen.
+Hierfür passen wir den Subset Top10User an, sodass dieser nur noch aus den Spalten user und pixel_color besteht.
+```{r}
+#Die doppelten Werte von user und pixel_color werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend 
+#nach der Anzahl absteigend sortiert.Der Dataframe benötigt user und pixel_color als Vektoren und count als Attribut(Gewichtung) der Kanten.
+Top10UserFarben <- Top10User %>% group_by(user, pixel_color) %>% summarise(count = n()) %>% arrange(desc(count))
+
+#Ausschreiben der Farben in pixel_color als Wörter statt Zahlen
+#für die spätere Verwendung. Der Hintergrund des Plots ist weißt,
+#weshalb die Farbe weiß nicht verwendet werden kann.
+#Daher wird die Farbe pink verwendet.
+
+Top10UserFarben$pixel_color <- ifelse(Top10UserFarben$pixel_color == 1, "red",
+ifelse(Top10UserFarben$pixel_color == 2, "orange",
+ifelse(Top10UserFarben$pixel_color == 3, "yellow",
+ifelse(Top10UserFarben$pixel_color == 4, "green",
+ifelse(Top10UserFarben$pixel_color == 5, "blue",
+ifelse(Top10UserFarben$pixel_color == 6, "purple",
+ifelse(Top10UserFarben$pixel_color == 7, "black", "pink"))))))) 
+
+#Anzeigen von Top10User$pixel_color zum testen
+#Top10User$pixel_color
+
+#Erstellen von Vektoren für die Knoten und Kanten des Graphen
+usernamen <- c(Top10UserFarben$user)
+pixel_color <- c(Top10UserFarben$pixel_color)
+gewichtung <- c(Top10UserFarben$count)
+
+#Anzahl der Einträge in den Vektoren zum testen.
+#length(usernamen)
+#length(pixel_color1)
+#length(gewichtung)
+#usernamen
+#gewichtung
+#pixel_color1
+
+#Erstellen einer Matrix aus den Vektoren
+Top10UserFarben_Matrix <- cbind(usernamen, pixel_color)
+
+#Funktionen zum testen
+#Top10User_namenUndFarben 
+#class(Top10User_namenUndFarben)
+
+#Erstellen eines Graphen aus dem Dataframe (Wie in der Vorleusung gezeigt)
+Top10UserFarben_Netzwerk <- graph_from_data_frame(Top10UserFarben_Matrix, directed = FALSE)
+
+#Testen ob der Graph erstellt worden ist
+#Top10User_Netzwerk
+
+#Hinzufügen von Attributen zu den Knoten und Kanten
+Top10UserFarben_Netzwerk <- set_edge_attr(Top10UserFarben_Netzwerk, "gewichtung", value = gewichtung)
+Top10UserFarben_Netzwerk <- set_edge_attr(Top10UserFarben_Netzwerk, "pixel_color", value = pixel_color)
+
+#Testen ob die Attribute hinzugefügt worden sind
+#Top10User_Netzwerk_gewichtet
+
+
+#Die Knotenfarbe wird hier bestimmt und soll
+#sich von den Farben der Kanten unterscheiden.
+vertex_colors <- rep("beige", vcount(Top10UserFarben_Netzwerk))
+
+#Plotten des Graphen
+plot(Top10UserFarben_Netzwerk,
+        #Layout des Graphen 
+        layout = layout.fruchterman.reingold,
+        #Kanten Dicke und Farbe der Kanten bestimmen
+        edge.width = E(Top10UserFarben_Netzwerk)$gewichtung/4,
+        edge.color = E(Top10UserFarben_Netzwerk)$pixel_color,
+        #Knoten Farbe und Größe bestimmen
+        vertex.frame.color = "black",
+        vertex.label.color = "black",
+        vertex.color = vertex_colors)
+```
+
+Bei der Betrachtung des Netzwerks fallen einige Farben besonders aus.
+Die Knoten Blau, schwarz und weiß(In der Abbildung als Pink dargestellt) sind besonders ausgeprägt und bilden in der mitte ein Dreieick.
+Der Knoten Blau ist mit den Usern 14523, 373857 und 17772 sehr stark verbunden und hat breite Kanten.
+Gleichzeitig hat der User 14523 eine zweite Kante zum Knoten Schwarz, welches auch auffällig ist.
+Der Knoten Schwarz hat insgesamt 4 stark ausgeprägt Kanten, wobei die stärkste Kante zum User 183449 führt.
+Der User 183449 hat meistens die Farben Weiß und Schwarz genutzt, wobei es auch zur Nutzung von Violett kam.
+Auch der Knoten Weiß hat 4 stak ausgeprägte Kanten.
+Einer dieser Kanten führt zum User 17772. Dieser User hat eine sehr breite Auswahl an Farben und hat gleichzeitig sehr ausgeprägt Kanten.
+Der User hat viele verschiedene Farben häufig genutzt zu haben. 
+Dieser User fällt damit sehr auf und ist im Vergleich zu den anderen Usern in der Mitte zu verorten.
+Eine weitere Auffälligkeit ist der Knoten Orange. Dieser Knoten hat vier Kanten, aber diese sind dünn.
+
+
+<br><br>
+
+### Untersuchung der Beziehung der Top10 User im Kontext der Koordinaten
+
+Im nächsten Schritt sollen die Top10 User auf ihre Beziehungen untersucht werden.
+Es soll herausgefunden werden, ob es Auffälligkeiten gibt, zwischen den Nutzern und den Koordinten, die sie ausgewählt haben.
+Hierfür passen wir den Subset Top10User an, sodass dieser nur noch aus den Spalten user und die Koordinaten besteht.
+Da die Koordinaten aus den zwei Spalten x und y besteht, werden diese Spalten zusammengefügt.
 
 ```{r}
+#Neuer Subset auf Grundlage von Top10User
+Top10UserKoordinaten <- Top10User
+
+#Füge eine neue Spalte hinzu, welcher die Koordinatenpaare zusammenfasst
+Top10UserKoordinaten <- transform(Top10UserKoordinaten, x_y = paste(x, y, sep = "_"))
+
+#Die doppelten Werte von x_y werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend
+#nach der Anzahl der Koordinatenpaare absteigend sortiert
+Top10UserKoordinaten <- Top10UserKoordinaten %>% group_by(user, x_y) %>% summarise(count = n()) %>% arrange(desc(count))
+
+#Anzeigen der Spalten von Top10UserKoordinaten zum testen
+#colnames(Top10UserKoordinaten)
+#Top10UserKoordinaten
+
+
+#Erstelen von Vektoren für die Knoten und Kanten des Graphen
+usernamen2 <- c(Top10UserKoordinaten$user)
+koordinaten <- c(Top10UserKoordinaten$x_y)
+gewichtung2 <- c(Top10UserKoordinaten$count)
+
+#Erstellen einer Matrix aus den Vektoren
+Top10UserKoordinaten_Matrix <- cbind(usernamen2, koordinaten)
+ 
+#Testen ob die Matrix erstellt worden ist
+#Top10UserKoordinaten_Matrix
+
+#Erstellen eines Graphen aus dem Dataframe (Wie in der Vorleusung gezeigt)
+Top10UserKoordinaten_Netzwerk <- graph_from_data_frame(Top10UserKoordinaten_Matrix, directed = FALSE)
+
+#Hinzufügen von Attributen zu den Knoten und Kanten
+Top10UserKoordinaten_Netzwerk <- set_edge_attr(Top10UserKoordinaten_Netzwerk, "gewichtung", value = gewichtung2)
+
+#Plotten des Graphen
+plot(Top10UserKoordinaten_Netzwerk,
+        #Layout des Graphen 
+        layout = layout.fruchterman.reingold,
+        #Kanten Dicke und Farbe der Kanten bestimmen
+        edge.width = E(Top10UserKoordinaten_Netzwerk)$gewichtung,
+        edge.color = "black",
+        vertex.label =NA)
+```
+
+Aus dem Graphen ist erkenntlich, dass es nur einen Knoten gibt, welcher zwei User verbindet.
+Die restlichen Knoten sind alle mit nur einem User verbunden.
+Daher sollten die Bereiche des Koordinatensystems in Bereiche eingeteilt werden.
+Hierzu wird das Koordinatensystem in 16 Bereiche eingeteilt. 
+Auf der X-Achse geht ein bereich von -500 bis -250, -250 bis 0, 0 bis 250 und 250 bis 500.
+Auf der Y-Achse geht ein bereich von -500 bis -250, -250 bis 0, 0 bis 250 und 250 bis 500.
+Die Bereiche werden nummeriert mit 1 bis 16 beginnend von links unten nach rechts oben.
+```{r}
+#Neuer Subset auf Grundlage von Top10User
+Top10UserKoordinaten <- Top10User
+
+#Füge eine neue Spalte hinzu, welcher die Koordinatenpaare zusammenfasst
+Top10UserKoordinaten <- transform(Top10UserKoordinaten, x_y = paste(x, y, sep = "_"))
+
+#Nun werden die Bereiche anhand der x und y Werte bestimmmt.
+#Hierfür wird eine neue Spalte erstellt, welche die Bereiche enthält.
+Top10UserKoordinaten$Bereich <- ifelse(Top10UserKoordinaten$x < -250 & Top10UserKoordinaten$y < -250, 1,
+ifelse(Top10UserKoordinaten$x < 0 & Top10UserKoordinaten$y < -250, 2,
+ifelse(Top10UserKoordinaten$x < 250 & Top10UserKoordinaten$y < -250, 3,
+ifelse(Top10UserKoordinaten$x < 500 & Top10UserKoordinaten$y < -250, 4,
+ifelse(Top10UserKoordinaten$x < -250 & Top10UserKoordinaten$y < 0, 5,
+ifelse(Top10UserKoordinaten$x < 0 & Top10UserKoordinaten$y < 0, 6,
+ifelse(Top10UserKoordinaten$x < 250 & Top10UserKoordinaten$y < 0, 7,
+ifelse(Top10UserKoordinaten$x < 500 & Top10UserKoordinaten$y < 0, 8,
+ifelse(Top10UserKoordinaten$x < -250 & Top10UserKoordinaten$y < 250, 9,
+ifelse(Top10UserKoordinaten$x < 0 & Top10UserKoordinaten$y < 250, 10,
+ifelse(Top10UserKoordinaten$x < 250 & Top10UserKoordinaten$y < 250, 11,
+ifelse(Top10UserKoordinaten$x < 500 & Top10UserKoordinaten$y < 250, 12,
+ifelse(Top10UserKoordinaten$x < -250 & Top10UserKoordinaten$y < 500, 13,
+ifelse(Top10UserKoordinaten$x < 0 & Top10UserKoordinaten$y < 500, 14,
+ifelse(Top10UserKoordinaten$x < 250 & Top10UserKoordinaten$y < 500, 15,
+ifelse(Top10UserKoordinaten$x < 500 & Top10UserKoordinaten$y < 500, 16, 0))))))))))))))))
+
+#Anzeigen der Spalten von Top10UserKoordinaten zum testen
+#colnames(Top10UserKoordinaten)
+
+#Die doppelten Werte von Bereich und user werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend
+#nach der Anzahl der Koordinatenpaare absteigend sortiert
+Top10UserKoordinaten <- Top10UserKoordinaten %>% group_by(user, Bereich) %>% summarise(count = n()) %>% arrange(desc(count))
+
+#Top10UserKoordinaten
+
+#Erstelen von Vektoren für die Knoten und Kanten des Graphen
+usernamen3 <- c(Top10UserKoordinaten$user)
+bereich <- c(Top10UserKoordinaten$Bereich)
+gewichtung3 <- c(Top10UserKoordinaten$count)
+
+
+#Erstellen einer Matrix aus den Vektoren
+Top10UserKoordinaten_Matrix <- cbind(usernamen3, bereich)
+
+#Top10UserKoordinaten_Matrix
+
+#Erstellen eines Graphen aus dem Dataframe (Wie in der Vorleusung gezeigt)
+Top10UserKoordinaten_Netzwerk <- graph_from_data_frame(Top10UserKoordinaten_Matrix, directed = FALSE)
+
+#Hinzufügen von Attributen zu den Knoten und Kanten
+Top10UserKoordinaten_Netzwerk <- set_edge_attr(Top10UserKoordinaten_Netzwerk, "gewichtung", value = gewichtung3)
+
+
+
+#Plotten des Graphen
+plot(Top10UserKoordinaten_Netzwerk,
+        #Layout des Graphen 
+        layout = layout.auto,
+        #Kanten Dicke und Farbe der Kanten bestimmen
+        edge.width = E(Top10UserKoordinaten_Netzwerk)$gewichtung/4,
+        #Zufällige Farben fü die Edges auswählen, um die Kanten besser zu unterscheiden
+        edge.color = sample(colors(), ecount(Top10UserKoordinaten_Netzwerk)),
+        vertex.color = ifelse(as.numeric(V(Top10UserKoordinaten_Netzwerk)$name) <= 16, "red", "blue"),
+        vertex.label.color = "white")
+
+
 ```
 
 
-
+# Interpretation der Ergebnisse und Beantwortung der Forschungsfrage

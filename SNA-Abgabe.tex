@@ -1,0 +1,938 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Social Network Analysis about the subreddit Event /r/Place2023},
+  pdfauthor={Mehmet Karaca},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Social Network Analysis about the subreddit Event /r/Place2023}
+\author{Mehmet Karaca}
+\date{27.10.2023}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\section{Einleitung}\label{sec-einleitung}
+
+\subsection{Forschungsfragen:}\label{sec-forschungsfragen}
+
+\subsection{Verwendete Librarys}\label{sec-verwendete-librarys}
+
+\#Installieren der benötigten Packages install.packages(``tidyverse'')
+install.packages(``igraph'') install.packages(``ggraph'')
+install.packages(``ggplot2'') install.packages(``igraphdata'')
+
+\#Laden der benötigten Packages library(tidyverse) library(igraph)
+library(ggraph) library(ggplot2) library(igraphdata)
+
+\subsection{Datenaufbereitung}\label{datenaufbereitung}
+
+Python Datenaufbereitugn erklären
+
+\section{Datenanalyse und
+Auswertung}\label{sec-datenanalyse-und-auswertung}
+
+\subsection{Erster Überblick über den
+Datensatz}\label{erster-uxfcberblick-uxfcber-den-datensatz}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Laden der Daten von  /Users/karaca/src/Social\_Network\_Analysis/Datensatz/2023\_place\_canvas\_20072023.csv}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"Datensatz/2023\_place\_canvas\_20072023.csv"}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
+
+\CommentTok{\#csv Datei in ein Dataframe umwandeln}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(data)}
+
+\CommentTok{\#Anzeigen der ersten 6 Zeilen}
+\FunctionTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   timestamp   user pixel_color    x    y
+## 1    130026 598534           8 -199 -235
+## 2    130043 627811           1    0 -298
+## 3    130043 679958           8  -42 -218
+## 4    130102 643456           6 -418 -232
+## 5    130140  53275           1  182  164
+## 6    130151 542786           8 -113   -1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Anzeigen der Struktur der Daten}
+\FunctionTok{str}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    2411941 obs. of  5 variables:
+##  $ timestamp  : int  130026 130043 130043 130102 130140 130151 130152 130157 130214 130342 ...
+##  $ user       : int  598534 627811 679958 643456 53275 542786 440917 144273 445652 684815 ...
+##  $ pixel_color: int  8 1 8 6 1 8 5 8 4 7 ...
+##  $ x          : int  -199 0 -42 -418 182 -113 -64 -267 -43 -43 ...
+##  $ y          : int  -235 -298 -218 -232 164 -1 -34 -142 52 74 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("igraph")}
+\FunctionTok{library}\NormalTok{(igraph)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'igraph'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     decompose, spectrum
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Tidyverse ist eine Sammlung von Tools für die Transformation und Visualisierung von Daten, z. B. dplyr, ggplot2, tidyr etc.}
+\CommentTok{\#install.packages("tidyverse")}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.3     v readr     2.1.4
+## v forcats   1.0.0     v stringr   1.5.0
+## v ggplot2   3.4.4     v tibble    3.2.1
+## v lubridate 1.9.3     v tidyr     1.3.0
+## v purrr     1.0.2
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x lubridate::%--%()      masks igraph::%--%()
+## x dplyr::as_data_frame() masks tibble::as_data_frame(), igraph::as_data_frame()
+## x purrr::compose()       masks igraph::compose()
+## x tidyr::crossing()      masks igraph::crossing()
+## x dplyr::filter()        masks stats::filter()
+## x dplyr::lag()           masks stats::lag()
+## x purrr::simplify()      masks igraph::simplify()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages(ggplot2)}
+\CommentTok{\#library(ggplot2)}
+
+\CommentTok{\#install.packages("dplyr")}
+\CommentTok{\#library(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+Da der Datensatz geladen worden ist, möchten wir diesen analysieren.
+Hierfür müssen wir uns einen Überblick der Daten machen
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Zuerst lassen wir uns den höchsten und niedrigsten Wert von timestamp anzeigen}
+\FunctionTok{max}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 155959
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 130026
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Als nächstes schauen wir uns an, wie viele einzigartige Werte es in der Spalte user gibt. }
+\CommentTok{\#Dies gibt uns die Anzahl an Usern an, da manche User mehrere Einträge haben.}
+\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{user))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 739675
+\end{verbatim}
+
+Der Datensatz wurde im Zeitraum von 13:00:26 bis 15:59:59 aufgenommen.
+In diesem Zeitraum haben 739675 User insgesamt 2411941 Pixel gesetzt.
+Die Pixel Color wurde als int Wert gespeichert, durch die
+Vorverarbeitung des Datensatzes. Die Zahlen haben einen bestimmten
+Schlüssel für die Farben. Tabelle der Farben rot = \#ff4500 = 1 orange =
+\#ffa800 = 2 gelb = \#ffd635 = 3 grün = \#00a368 = 4 blau = \#3690ea = 5
+lila = \#b44ac0 = 6 schwarz = \#000000 = 7 weiß = \#ffffff = 8
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Diese Farben nutzen wir um einene Farbzuordnungstabelle zu erstellen}
+\NormalTok{farbzuordnung }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\#ff4500"}\NormalTok{, }\StringTok{"\#ffa800"}\NormalTok{, }\StringTok{"\#ffd635"}\NormalTok{, }\StringTok{"\#00a368"}\NormalTok{, }\StringTok{"\#3690ea"}\NormalTok{, }\StringTok{"\#b44ac0"}\NormalTok{, }
+\StringTok{"\#000000"}\NormalTok{, }\StringTok{"\#ffffff"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Als nächstes zeigen wir uns die maximal und minmalwerte von x und y
+anzeigen, um einen Eindruck des Koordinatensystems zu bekommen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 499
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -500
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 499
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -500
+\end{verbatim}
+
+Das Koordinatensystem erstreckt sich von -500 bis 499 entlang sowohl der
+X-Achse als auch der Y-Achse. Als ersten Schritt wollen wir die Daten
+mit einem Plot visualisieren, um einen Eindruck der Daten zu bekommen.
+Hierfür erstellen wir ein Subset, welches nur aus den Koordinatenpaaren
+besteht.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstelle einen Subset, welcher nur aus den Koordinatenpaaren besteht}
+\NormalTok{Koordinaten\_subset\_x\_und\_y }\OtherTok{\textless{}{-}}\NormalTok{ data[,}\FunctionTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\StringTok{"y"}\NormalTok{)]}
+
+\CommentTok{\#Diesen Subset wollen wir uns anschauen und plotten diesen in einem Scatterplot.}
+\FunctionTok{plot}\NormalTok{(Koordinaten\_subset\_x\_und\_y}\SpecialCharTok{$}\NormalTok{x, Koordinaten\_subset\_x\_und\_y}\SpecialCharTok{$}\NormalTok{y, }\AttributeTok{xlab =} \StringTok{"X{-}Achse"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Y{-}Achse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+An dem Plot erkennt man, das beinahe alle Koordinaten mit einem pixel
+belegt worden sind. Es gibt nur vereinzelte Ausnahmen, die nicht belegt
+worden sind. Aus dem Plot können keine tiefergehenden Erkenntnisse
+gezogen werden. Daher soll im nächsten Schritt die Punkte farbig
+visualisiert werden, um bestimmte Muster erkennen zu können. Hierzu
+erstellen wir einen neuen Subset, welcher aus den Koordinatenpaaren und
+dem pixelcolor besteht. Diesen subset wollen wir uns anschauen und
+plotten diesen auf einem Scatterplot mit der Farbe des pixel\_color. Die
+Farben sind in der Tabelle der Farben oben beschrieben.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren und dem pixelcolor besteht}
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{y=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{y, }\AttributeTok{pixel\_color=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{pixel\_color)}
+
+\CommentTok{\#Diesen Subset wollen wir uns anschauen und plotten diesen auf einem Scatterplot mit der Farbe des pixelcolors}
+\FunctionTok{plot}\NormalTok{(Koordinaten\_subset\_x\_y\_pixelcolor}\SpecialCharTok{$}\NormalTok{x, Koordinaten\_subset\_x\_y\_pixelcolor}\SpecialCharTok{$}\NormalTok{y, }
+\AttributeTok{col =}\NormalTok{ farbzuordnung[Koordinaten\_subset\_x\_y\_pixelcolor}\SpecialCharTok{$}\NormalTok{pixel\_color] ,}\AttributeTok{pch=}\DecValTok{15}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"X{-}Achse"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Y{-}Achse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-7-1.pdf}
+Durch diese Darstellung ist nun zu erkennen, dass es bestimmte
+Farbmuster gibt. Beispielsweise sind erste Flaggen zu erkennen wie die
+Französische (links), die Deutsche (links unten), türkische, indische,
+italienische Allerdings haben wir ein Problem bei dieser Visualisierung,
+da viele Punkte doppelt vorkommen. Dies liegt daran, dass viele User
+mehrere Pixel gesetzt haben. Deswegen möchten wir nur die letzten Pixel
+setzen lassen. Hierfür erstellen wir einen neuen Subset. In diesem
+subset gibt es keine doppelten Koordinatenpaare.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Entfernen von doppelten Koordinatenpaaren, um nur die letzten Pixel zu behalten}
+\NormalTok{Koordinaten\_subset\_eindeutig }\OtherTok{\textless{}{-}} 
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor[}\SpecialCharTok{!}\FunctionTok{duplicated}\NormalTok{(Koordinaten\_subset\_x\_y\_pixelcolor[, }\FunctionTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\StringTok{"y"}\NormalTok{)], }
+\AttributeTok{fromLast =} \ConstantTok{TRUE}\NormalTok{), ]}
+
+\CommentTok{\# Plot der eindeutigen Koordinatenpaare mit der Farbe des letzten pixel\_color}
+\FunctionTok{plot}\NormalTok{(Koordinaten\_subset\_eindeutig}\SpecialCharTok{$}\NormalTok{x, Koordinaten\_subset\_eindeutig}\SpecialCharTok{$}\NormalTok{y, }
+\AttributeTok{col =}\NormalTok{ farbzuordnung[Koordinaten\_subset\_eindeutig}\SpecialCharTok{$}\NormalTok{pixel\_color], }\AttributeTok{pch =} \DecValTok{15}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"X{-}Achse"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Y{-}Achse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-8-1.pdf}
+Die Genauigkeit und Präzision der Grafik ist nun deutlich besser. Es
+sind keine doppelten Koordinatenpaare mehr vorhanden. Allerdings ist
+dies noch nicht perfekt. Beim ausprobieren mit ggplot2 hat sich gezeigt,
+dass bei der Verwendung von ggplot2 die Grafik noch präziser wird. Daher
+wird im nächsten Schritt die Grafik mit ggplot2 geplottet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Plotten der Grafik in ggplot}
+\FunctionTok{ggplot}\NormalTok{(Koordinaten\_subset\_eindeutig, }\FunctionTok{aes}\NormalTok{(x, y, }\AttributeTok{col =}\NormalTok{ farbzuordnung[pixel\_color])) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{15}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_identity}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Koordinatenpaare mit Farbe"}\NormalTok{, }\AttributeTok{x =} \StringTok{"X{-}Achse"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Y{-}Achse"}\NormalTok{, }\AttributeTok{col =} \StringTok{"Farbe"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+Diese Darstellung ist die präzisteste Darstellung, die wir erstellen
+konnten. Es ist zu erkennen, dass die Flaggen deutlicher zu erkennen
+sind. Außerdem sind Sätze, Wörter und Logos zu erkennen. Aber auch
+Andeutung von Bildern wie z.B. ein blauer Elefant und ein ``Pikachu''
+nut Sonnenbrille (Ein Pokemon aus dem gleichnamigen Spiel) sind der
+unteren rechten Ecke ist zu erkennen. Nun möchten wir den zeitlichen
+Verlauf der Pixel setzen lassen. Diesen möchten wir in Form eines gifs
+animieren, wie es in der Vorlesung gezeigt worden ist. Hierfür erstellen
+wir einen neuen Subset, welcher zusätzlich noch die Spalte timestamp
+enthält.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren, dem pixelcolor und dem timestamp besteht}
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{y=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{y, }\AttributeTok{pixel\_color=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{pixel\_color, }\AttributeTok{timestamp=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{timestamp)}
+
+\CommentTok{\#Der Subset wird nach dem timestamp sortiert und bekommt einen Index mit 1 beginnend zugewiesen}
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp }\OtherTok{\textless{}{-}}\NormalTok{ Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp[}\FunctionTok{order}\NormalTok{(Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp}\SpecialCharTok{$}\NormalTok{timestamp),]}
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp}\SpecialCharTok{$}\NormalTok{index }\OtherTok{\textless{}{-}} \FunctionTok{seq.int}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp))}
+
+\CommentTok{\#Der subset wird als Grafik in ggplot dargestellt, um diese später als gif zu animieren}
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp\_grafik }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp, }\FunctionTok{aes}\NormalTok{(x, y, }\AttributeTok{col =}\NormalTok{ farbzuordnung[pixel\_color])) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{15}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_identity}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Zeitlicher Verlauf der Pixel"}\NormalTok{, }\AttributeTok{x =} \StringTok{"X{-}Achse"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Y{-}Achse"}\NormalTok{, }\AttributeTok{col =} \StringTok{"Farbe"}\NormalTok{)}
+
+\CommentTok{\#Anzeigen der Grafik}
+\NormalTok{Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp\_grafik}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Wir importieren Biblotheken, welche uns beim erstellen des gifs helfen.}
+
+\CommentTok{\#install.packages("gganimate")}
+\FunctionTok{library}\NormalTok{(gganimate)}
+
+\CommentTok{\#install.packages("gifski")}
+\FunctionTok{library}\NormalTok{(gifski)}
+
+\FunctionTok{library}\NormalTok{(gapminder)}
+
+\CommentTok{\#install.packages("ggplot2")}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+Da wir diese nun importiert haben, können wir das gif erstellen. Aus der
+Grafik Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp\_grafik wird ein
+gif erstellt Hierzu wird nacheinander in Reihenfolge des Index
+angezeigt. Nach dem ein Pixel gesetzt worden ist, wird der Index um 1
+erhöht und der nächste Pixel wird gesetzt. Dies wird solange wiederholt,
+bis alle Pixel gesetzt worden sind. Dieser Prozess wird in 200 Frames
+mit einer Framerate von 5 fps dargestellt. Kein Pixel darf nach dem
+setzen verschwinden oder sich bewegen, sondern bleibt bis zum Ende
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstellen des gifs.}
+\CommentTok{\#Animation \textless{}{-} animate(  Koordinaten\_subset\_x\_y\_pixelcolor\_timestamp\_grafik +}
+\CommentTok{\#    transition\_manual(index) + ease\_aes(\textquotesingle{}linear\textquotesingle{}) + }
+\CommentTok{\#     view\_follow(fixed\_x = TRUE, fixed\_y = TRUE),}
+\CommentTok{\#  nframes = 200, fps = 5, width = 800, height = 600)}
+
+
+\CommentTok{\#Speichern des gifs.}
+\CommentTok{\#anim\_save("Animation.gif", Animation)}
+
+\CommentTok{\#Da die Darstellung eines beweglichen gifs in einem PDF{-}Dokument schwierig ist}
+\CommentTok{\# und aus Performance Gründen, wurde die Funktion des Gif erstellens auskommentiert,}
+\CommentTok{\# aber die gifs ist in der Abgabe beigefügt.}
+\end{Highlighting}
+\end{Shaded}
+
+Diese Darstellung gibt uns sehr schön den Verlauf des Prozesses dar. Zu
+Beginn der Veranstaltung gibt es gewisse Bereiche, welche sehr schnell
+gefüllt worden sind. Diese Bereiche wurden von den dementsprechenden
+Ländergruppen (z.B. Deutschland, Frankreich, Türkei) versucht zu füllen,
+sodass die Flagge des Landes entsteht. Im weiteren Verlauf des Prozesses
+wurden die Länderflaggen immer weiter ausgebaut und es wurden neue
+Länderflaggen hinzugefügt.Das Bild der jeweiligen Länder wurde
+deutlicher und deutlicher.
+
+Um weitere Erkenntnisse zu ziehen, soll die Quantität untersucht werden.
+Hierzu soll herausgefunden werden, welche Bereche am meisten Pixel
+gesetzt bekommen haben. Es soll eine Heatmap erstelt werden, welcher die
+Bereiche mit den meisten Färbungen anzeigt. Hierfür erstellen wir einen
+neuen Subset, welcher aus den Koordinatenpaaren besteht.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren besteht}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{y=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{y)}
+
+\CommentTok{\#Füge eine neue Spalte hinzu, welcher die Koordinatenpaare zusammenfasst}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap, }\AttributeTok{x\_y =} \FunctionTok{paste}\NormalTok{(x, y, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\CommentTok{\#Die doppelten Werte von x\_y werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend }
+\CommentTok{\#nach der Anzahl der Koordinatenpaare absteigend sortiert}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap }\OtherTok{\textless{}{-}}\NormalTok{ Koordinaten\_subset\_x\_y\_heatmap }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(x\_y) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count))}
+
+\CommentTok{\#Nun sollen doppelte Koordinatenpaare x\_y entfernt werden, um nur die eindeutigen Koordinatenpaare zu behalten}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap }\OtherTok{\textless{}{-}}\NormalTok{ Koordinaten\_subset\_x\_y\_heatmap[}\SpecialCharTok{!}\FunctionTok{duplicated}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap}\SpecialCharTok{$}\NormalTok{x\_y), ]}
+
+\CommentTok{\#Zeige die ersten 5 Zeilen des Subsets an}
+\FunctionTok{head}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   x_y       count
+##   <chr>     <int>
+## 1 499_499    1949
+## 2 -500_499   1715
+## 3 -500_-500  1682
+## 4 481_-361   1449
+## 5 220_-321   1177
+## 6 0_0        1150
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Zeige den größten und kleinsten Wert von count an}
+\NormalTok{max\_count }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap}\SpecialCharTok{$}\NormalTok{count)}
+\NormalTok{min\_count }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap}\SpecialCharTok{$}\NormalTok{count)}
+
+\CommentTok{\# Erstelle die Dichtefunktion}
+\NormalTok{density\_function }\OtherTok{\textless{}{-}} \FunctionTok{ecdf}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap}\SpecialCharTok{$}\NormalTok{count)}
+
+\CommentTok{\# Plotte die Dichtefunktion}
+\FunctionTok{plot}\NormalTok{(density\_function, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2000}\NormalTok{), }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+     \AttributeTok{xlab=}\StringTok{"Anzahl der Koordinatenpaare"}\NormalTok{, }
+     \AttributeTok{ylab=}\StringTok{"Kumulierte Wahrscheinlichkeit"}\NormalTok{, }
+     \AttributeTok{main=}\StringTok{"Kumulierte Dichtefunktion der Koordinatenpaare"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-13-1.pdf}
+Die kumulierte Dichtefunktion der koordinatenpaare wurde benötigt, da
+vorher nicht ersichtlich war, wie die Verteilung der Koordinatenpaare
+ist. Ohne diese Erkenntnis war es durchaus schwierig eine passende
+Farbpalette zu erstellen, da die Verteilung sehr ungleichmäßig ist.
+Diese ungleichmäßige Verteilung mit einer gleichmäßigen Farbpalette
+darzustellen, würde zu einer falschen Darstellung führen. Beim
+ausprobieren mit einer gleichmäßigen Farbpalette war die Visualisierung
+nicht aussagekräftig. Diese Erkenntnis hat sich im Verlauf der
+Untersuchung herausgestellt, weshalb Anpassungen vorgenommen wurden. Nun
+ist es möglich eine aussagekräftige Heatmap zu erstellen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstellen einer Tabelle, welche die Häufigkeit der Koordinatenpaare zählt}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap\_tabelle }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{y=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{y)}
+
+\CommentTok{\# Zähle die Häufigkeit der Koordinatenpaare und erstelle eine neue Tabelle}
+\NormalTok{häufigkeit\_tabelle }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{table}\NormalTok{(Koordinaten\_subset\_x\_y\_heatmap\_tabelle))}
+
+\CommentTok{\# Benenne die Spalten um}
+\FunctionTok{colnames}\NormalTok{(häufigkeit\_tabelle) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\StringTok{"Y"}\NormalTok{, }\StringTok{"Anzahl"}\NormalTok{)}
+
+\CommentTok{\#Füge eine neue Spalte hinzu, welche den Koordinatenpaare Farben zuweist, je nach Anzahl der Koordinatenpaare}
+\CommentTok{\#Die Farbbereiche werden durch eine passende Auswahl definiert.}
+\NormalTok{häufigkeit\_tabelle}\SpecialCharTok{$}\NormalTok{Farbe }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(häufigkeit\_tabelle}\SpecialCharTok{$}\NormalTok{Anzahl }\SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"white"}\NormalTok{,}
+                                   \FunctionTok{ifelse}\NormalTok{(häufigkeit\_tabelle}\SpecialCharTok{$}\NormalTok{Anzahl }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{, }\StringTok{"\#b44ac0"}\NormalTok{,}
+                                          \FunctionTok{ifelse}\NormalTok{(häufigkeit\_tabelle}\SpecialCharTok{$}\NormalTok{Anzahl }\SpecialCharTok{\textless{}} \DecValTok{50}\NormalTok{, }\StringTok{"\#3690ea"}\NormalTok{,}
+                                                        \FunctionTok{ifelse}\NormalTok{(häufigkeit\_tabelle}\SpecialCharTok{$}\NormalTok{Anzahl }\SpecialCharTok{\textless{}} \DecValTok{350}\NormalTok{, }\StringTok{"\#ffa800"}\NormalTok{, }\StringTok{"red"}\NormalTok{))))}
+
+\CommentTok{\# Zeige einen Ausschnitt der Tabelle an zum testen}
+\CommentTok{\#print(head(häufigkeit\_tabelle))}
+
+\CommentTok{\#Anzahl der Zeilen der Tabelle}
+\CommentTok{\#nrow(häufigkeit\_tabelle)}
+
+\CommentTok{\#Nun erstellen wir einen Plot, welcher die X{-}Achse und Y{-}Achse der Koordinatenpaare mit ihrer Farbe darstellt.}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap\_tabelle\_grafik }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(häufigkeit\_tabelle, }\FunctionTok{aes}\NormalTok{(X, Y, }\AttributeTok{col =}\NormalTok{ Farbe)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{15}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{as.character}\NormalTok{(häufigkeit\_tabelle}\SpecialCharTok{$}\NormalTok{Farbe)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.line =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Heatmap von der Anzahl der Setzungen"}\NormalTok{, }\AttributeTok{col =} \StringTok{"Farbe"}\NormalTok{)}
+
+\CommentTok{\#Anzeigen der Grafik}
+\NormalTok{Koordinaten\_subset\_x\_y\_heatmap\_tabelle\_grafik}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+Durch die Heatmap erkennt man sehr schön, welche Bereiche am meisten
+Pixel gesetzt bekommen haben. Die roten Bereiche wurden relativ oft
+gesetzt. Die Anzahl dieser bereiche ist relativ wenig. Es gibt
+Anhäufungen in den Ecken des Koordinatensystems mit Ausnahme der rechten
+unteren Ecke. Außerdem gibt es in der Mitte des Koordinatensystems
+verteile kleinere Anhäufungen von Pixeln. In diesen roten Bereichen kann
+es durchaus sein, dass die Teilnehmer an der Veranstaltungen sich
+gegenseitig überboten haben. Die Annahme, dass die roten Bereiche
+entstanden sind, um bestimmte Bilder zu erzeugen und gemeinsam zu
+erstellen, kann wiederlegt werden durch die Betrachtung der blauen
+Bereiche der Heatmap. In den blauen Bereichen sind zusammenhängende
+Bereiche und Muster zu erkennen. Diese Bereiche sind relativ groß und
+wurde daher nicht versucht zu zerstören oder zu überpixel. Es sind
+vereinzelt auch Buchstaben erkenntlich, welche in den blauen Bereichen
+entstanden sind. Besonders auffällig ist der vertikale blaue Streifen
+auf der linken Seite der Heatmap. Außerdem ist ein weiterer horizontaler
+blauer Streifen in der unteren Seite der Heatmap zu erkennen.
+
+\subsection{Untersuchung der Hauptakteure (Stehen die Hauptakteure in
+Beziehung zu
+einandner?)}\label{untersuchung-der-hauptakteure-stehen-die-hauptakteure-in-beziehung-zu-einandner}
+
+Da nun ein grober Überblick der gesamten Daten und des
+Koordinatensystems vorhanden ist, soll nun untersucht werden, welche
+User die Hauptakteure sind. Hierfür erstellen wir einen neuen Subset,
+welcher aus den Koordinatenpaaren, dem pixelcolor, dem timestamp und dem
+user besteht. Diesen Subset filtern wir nach den Top 10 Usern, welche
+die meisten Pixel gesetzt haben. Dieser Subset ist die Grundlage für die
+weiteren Untersuchungen zu den Pixel\_Farben und den Koordinatenpaaren.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren, dem pixelcolor, dem timestamp und dem user besteht}
+\NormalTok{Top10User }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{x, }\AttributeTok{y=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{y, }\AttributeTok{pixel\_color=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{pixel\_color, }\AttributeTok{timestamp=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{timestamp, }\AttributeTok{user=}\NormalTok{data}\SpecialCharTok{$}\NormalTok{user)}
+
+\CommentTok{\# Filtern des Subsets nach den Top 10 Usern, }
+\CommentTok{\#welche die meisten Pixel gesetzt haben}
+\NormalTok{Top10User }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(user) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+
+\CommentTok{\# Filtern des ursprünglichen Dataframes nach den Top 20 Usern}
+\NormalTok{Top10User }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(user }\SpecialCharTok{\%in\%}\NormalTok{ Top10User}\SpecialCharTok{$}\NormalTok{user)}
+
+\CommentTok{\#Anzeigen der Spalten von Top10User}
+\CommentTok{\#colnames(Top10User)}
+\CommentTok{\#Top10User}
+
+\CommentTok{\#printe die einzigartigen User zum testen}
+\CommentTok{\#unique(Top10User$user)}
+
+\CommentTok{\#printe die einzigartigen Farben zum testen}
+\CommentTok{\#unique(Top10User$pixel\_color)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Untersuchung der Beziehung der Top10 User im Kontext der
+Farben}\label{untersuchung-der-beziehung-der-top10-user-im-kontext-der-farben}
+
+Als nächstes wollen wir untersuchen, welche Farben die Top 10 User
+gesetzt haben und wie diese in Verbindung stehen. Hierfür passen wir den
+Subset Top10User an, sodass dieser nur noch aus den Spalten user und
+pixel\_color besteht.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Die doppelten Werte von user und pixel\_color werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend }
+\CommentTok{\#nach der Anzahl absteigend sortiert.Der Dataframe benötigt user und pixel\_color als Vektoren und count als Attribut(Gewichtung) der Kanten.}
+\NormalTok{Top10UserFarben }\OtherTok{\textless{}{-}}\NormalTok{ Top10User }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(user, pixel\_color) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'user'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Ausschreiben der Farben in pixel\_color als Wörter statt Zahlen}
+\CommentTok{\#für die spätere Verwendung. Der Hintergrund des Plots ist weißt,}
+\CommentTok{\#weshalb die Farbe weiß nicht verwendet werden kann.}
+\CommentTok{\#Daher wird die Farbe pink verwendet.}
+
+\NormalTok{Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"red"}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"orange"}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"yellow"}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"green"}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{5}\NormalTok{, }\StringTok{"blue"}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{6}\NormalTok{, }\StringTok{"purple"}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color }\SpecialCharTok{==} \DecValTok{7}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"pink"}\NormalTok{))))))) }
+
+\CommentTok{\#Anzeigen von Top10User$pixel\_color zum testen}
+\CommentTok{\#Top10User$pixel\_color}
+
+\CommentTok{\#Erstellen von Vektoren für die Knoten und Kanten des Graphen}
+\NormalTok{usernamen }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{user)}
+\NormalTok{pixel\_color }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{pixel\_color)}
+\NormalTok{gewichtung }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserFarben}\SpecialCharTok{$}\NormalTok{count)}
+
+\CommentTok{\#Anzahl der Einträge in den Vektoren zum testen.}
+\CommentTok{\#length(usernamen)}
+\CommentTok{\#length(pixel\_color1)}
+\CommentTok{\#length(gewichtung)}
+\CommentTok{\#usernamen}
+\CommentTok{\#gewichtung}
+\CommentTok{\#pixel\_color1}
+
+\CommentTok{\#Erstellen einer Matrix aus den Vektoren}
+\NormalTok{Top10UserFarben\_Matrix }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(usernamen, pixel\_color)}
+
+\CommentTok{\#Funktionen zum testen}
+\CommentTok{\#Top10User\_namenUndFarben }
+\CommentTok{\#class(Top10User\_namenUndFarben)}
+
+\CommentTok{\#Erstellen eines Graphen aus dem Dataframe (Wie in der Vorleusung gezeigt)}
+\NormalTok{Top10UserFarben\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{graph\_from\_data\_frame}\NormalTok{(Top10UserFarben\_Matrix, }\AttributeTok{directed =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\#Testen ob der Graph erstellt worden ist}
+\CommentTok{\#Top10User\_Netzwerk}
+
+\CommentTok{\#Hinzufügen von Attributen zu den Knoten und Kanten}
+\NormalTok{Top10UserFarben\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{set\_edge\_attr}\NormalTok{(Top10UserFarben\_Netzwerk, }\StringTok{"gewichtung"}\NormalTok{, }\AttributeTok{value =}\NormalTok{ gewichtung)}
+\NormalTok{Top10UserFarben\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{set\_edge\_attr}\NormalTok{(Top10UserFarben\_Netzwerk, }\StringTok{"pixel\_color"}\NormalTok{, }\AttributeTok{value =}\NormalTok{ pixel\_color)}
+
+\CommentTok{\#Testen ob die Attribute hinzugefügt worden sind}
+\CommentTok{\#Top10User\_Netzwerk\_gewichtet}
+
+
+\CommentTok{\#Die Knotenfarbe wird hier bestimmt und soll}
+\CommentTok{\#sich von den Farben der Kanten unterscheiden.}
+\NormalTok{vertex\_colors }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{"beige"}\NormalTok{, }\FunctionTok{vcount}\NormalTok{(Top10UserFarben\_Netzwerk))}
+
+\CommentTok{\#Plotten des Graphen}
+\FunctionTok{plot}\NormalTok{(Top10UserFarben\_Netzwerk,}
+        \CommentTok{\#Layout des Graphen }
+        \AttributeTok{layout =}\NormalTok{ layout.fruchterman.reingold,}
+        \CommentTok{\#Kanten Dicke und Farbe der Kanten bestimmen}
+        \AttributeTok{edge.width =} \FunctionTok{E}\NormalTok{(Top10UserFarben\_Netzwerk)}\SpecialCharTok{$}\NormalTok{gewichtung}\SpecialCharTok{/}\DecValTok{4}\NormalTok{,}
+        \AttributeTok{edge.color =} \FunctionTok{E}\NormalTok{(Top10UserFarben\_Netzwerk)}\SpecialCharTok{$}\NormalTok{pixel\_color,}
+        \CommentTok{\#Knoten Farbe und Größe bestimmen}
+        \AttributeTok{vertex.frame.color =} \StringTok{"black"}\NormalTok{,}
+        \AttributeTok{vertex.label.color =} \StringTok{"black"}\NormalTok{,}
+        \AttributeTok{vertex.color =}\NormalTok{ vertex\_colors)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+Bei der Betrachtung des Netzwerks fallen einige Farben besonders aus.
+Die Knoten Blau, schwarz und weiß(In der Abbildung als Pink dargestellt)
+sind besonders ausgeprägt und bilden in der mitte ein Dreieick. Der
+Knoten Blau ist mit den Usern 14523, 373857 und 17772 sehr stark
+verbunden und hat breite Kanten. Gleichzeitig hat der User 14523 eine
+zweite Kante zum Knoten Schwarz, welches auch auffällig ist. Der Knoten
+Schwarz hat insgesamt 4 stark ausgeprägt Kanten, wobei die stärkste
+Kante zum User 183449 führt. Der User 183449 hat meistens die Farben
+Weiß und Schwarz genutzt, wobei es auch zur Nutzung von Violett kam.
+Auch der Knoten Weiß hat 4 stak ausgeprägte Kanten. Einer dieser Kanten
+führt zum User 17772. Dieser User hat eine sehr breite Auswahl an Farben
+und hat gleichzeitig sehr ausgeprägt Kanten. Der User hat viele
+verschiedene Farben häufig genutzt zu haben. Dieser User fällt damit
+sehr auf und ist im Vergleich zu den anderen Usern in der Mitte zu
+verorten. Eine weitere Auffälligkeit ist der Knoten Orange. Dieser
+Knoten hat vier Kanten, aber diese sind dünn.
+
+\subsubsection{Untersuchung der Beziehung der Top10 User im Kontext der
+Koordinaten}\label{untersuchung-der-beziehung-der-top10-user-im-kontext-der-koordinaten}
+
+Im nächsten Schritt sollen die Top10 User auf ihre Beziehungen
+untersucht werden. Es soll herausgefunden werden, ob es Auffälligkeiten
+gibt, zwischen den Nutzern und den Koordinten, die sie ausgewählt haben.
+Hierfür passen wir den Subset Top10User an, sodass dieser nur noch aus
+den Spalten user und die Koordinaten besteht. Da die Koordinaten aus den
+zwei Spalten x und y besteht, werden diese Spalten zusammengefügt.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Neuer Subset auf Grundlage von Top10User}
+\NormalTok{Top10UserKoordinaten }\OtherTok{\textless{}{-}}\NormalTok{ Top10User}
+
+\CommentTok{\#Füge eine neue Spalte hinzu, welcher die Koordinatenpaare zusammenfasst}
+\NormalTok{Top10UserKoordinaten }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(Top10UserKoordinaten, }\AttributeTok{x\_y =} \FunctionTok{paste}\NormalTok{(x, y, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\CommentTok{\#Die doppelten Werte von x\_y werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend}
+\CommentTok{\#nach der Anzahl der Koordinatenpaare absteigend sortiert}
+\NormalTok{Top10UserKoordinaten }\OtherTok{\textless{}{-}}\NormalTok{ Top10UserKoordinaten }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(user, x\_y) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'user'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Anzeigen der Spalten von Top10UserKoordinaten zum testen}
+\CommentTok{\#colnames(Top10UserKoordinaten)}
+\CommentTok{\#Top10UserKoordinaten}
+
+
+\CommentTok{\#Erstelen von Vektoren für die Knoten und Kanten des Graphen}
+\NormalTok{usernamen2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{user)}
+\NormalTok{koordinaten }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x\_y)}
+\NormalTok{gewichtung2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{count)}
+
+\CommentTok{\#Erstellen einer Matrix aus den Vektoren}
+\NormalTok{Top10UserKoordinaten\_Matrix }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(usernamen2, koordinaten)}
+ 
+\CommentTok{\#Testen ob die Matrix erstellt worden ist}
+\CommentTok{\#Top10UserKoordinaten\_Matrix}
+
+\CommentTok{\#Erstellen eines Graphen aus dem Dataframe (Wie in der Vorleusung gezeigt)}
+\NormalTok{Top10UserKoordinaten\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{graph\_from\_data\_frame}\NormalTok{(Top10UserKoordinaten\_Matrix, }\AttributeTok{directed =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\#Hinzufügen von Attributen zu den Knoten und Kanten}
+\NormalTok{Top10UserKoordinaten\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{set\_edge\_attr}\NormalTok{(Top10UserKoordinaten\_Netzwerk, }\StringTok{"gewichtung"}\NormalTok{, }\AttributeTok{value =}\NormalTok{ gewichtung2)}
+
+\CommentTok{\#Plotten des Graphen}
+\FunctionTok{plot}\NormalTok{(Top10UserKoordinaten\_Netzwerk,}
+        \CommentTok{\#Layout des Graphen }
+        \AttributeTok{layout =}\NormalTok{ layout.fruchterman.reingold,}
+        \CommentTok{\#Kanten Dicke und Farbe der Kanten bestimmen}
+        \AttributeTok{edge.width =} \FunctionTok{E}\NormalTok{(Top10UserKoordinaten\_Netzwerk)}\SpecialCharTok{$}\NormalTok{gewichtung,}
+        \AttributeTok{edge.color =} \StringTok{"black"}\NormalTok{,}
+        \AttributeTok{vertex.label =}\ConstantTok{NA}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+Aus dem Graphen ist erkenntlich, dass es nur einen Knoten gibt, welcher
+zwei User verbindet. Die restlichen Knoten sind alle mit nur einem User
+verbunden. Daher sollten die Bereiche des Koordinatensystems in Bereiche
+eingeteilt werden. Hierzu wird das Koordinatensystem in 16 Bereiche
+eingeteilt. Auf der X-Achse geht ein bereich von -500 bis -250, -250 bis
+0, 0 bis 250 und 250 bis 500. Auf der Y-Achse geht ein bereich von -500
+bis -250, -250 bis 0, 0 bis 250 und 250 bis 500. Die Bereiche werden
+nummeriert mit 1 bis 16 beginnend von links unten nach rechts oben.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Neuer Subset auf Grundlage von Top10User}
+\NormalTok{Top10UserKoordinaten }\OtherTok{\textless{}{-}}\NormalTok{ Top10User}
+
+\CommentTok{\#Füge eine neue Spalte hinzu, welcher die Koordinatenpaare zusammenfasst}
+\NormalTok{Top10UserKoordinaten }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(Top10UserKoordinaten, }\AttributeTok{x\_y =} \FunctionTok{paste}\NormalTok{(x, y, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\CommentTok{\#Nun werden die Bereiche anhand der x und y Werte bestimmmt.}
+\CommentTok{\#Hierfür wird eine neue Spalte erstellt, welche die Bereiche enthält.}
+\NormalTok{Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{Bereich }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250}\NormalTok{, }\DecValTok{2}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250}\NormalTok{, }\DecValTok{3}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{500} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250}\NormalTok{, }\DecValTok{4}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{, }\DecValTok{6}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{, }\DecValTok{7}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{500} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{250}\NormalTok{, }\DecValTok{9}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{250}\NormalTok{, }\DecValTok{10}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{250}\NormalTok{, }\DecValTok{11}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{500} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{250}\NormalTok{, }\DecValTok{12}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{500}\NormalTok{, }\DecValTok{13}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{500}\NormalTok{, }\DecValTok{14}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{250} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{500}\NormalTok{, }\DecValTok{15}\NormalTok{,}
+\FunctionTok{ifelse}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{\textless{}} \DecValTok{500} \SpecialCharTok{\&}\NormalTok{ Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{\textless{}} \DecValTok{500}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{0}\NormalTok{))))))))))))))))}
+
+\CommentTok{\#Anzeigen der Spalten von Top10UserKoordinaten zum testen}
+\CommentTok{\#colnames(Top10UserKoordinaten)}
+
+\CommentTok{\#Die doppelten Werte von Bereich und user werden zusammengefasst und gezählt und in der Spalte count gespeichert und anschließend}
+\CommentTok{\#nach der Anzahl der Koordinatenpaare absteigend sortiert}
+\NormalTok{Top10UserKoordinaten }\OtherTok{\textless{}{-}}\NormalTok{ Top10UserKoordinaten }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(user, Bereich) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'user'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Top10UserKoordinaten}
+
+\CommentTok{\#Erstelen von Vektoren für die Knoten und Kanten des Graphen}
+\NormalTok{usernamen3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{user)}
+\NormalTok{bereich }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{Bereich)}
+\NormalTok{gewichtung3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(Top10UserKoordinaten}\SpecialCharTok{$}\NormalTok{count)}
+
+
+\CommentTok{\#Erstellen einer Matrix aus den Vektoren}
+\NormalTok{Top10UserKoordinaten\_Matrix }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(usernamen3, bereich)}
+
+\CommentTok{\#Top10UserKoordinaten\_Matrix}
+
+\CommentTok{\#Erstellen eines Graphen aus dem Dataframe (Wie in der Vorleusung gezeigt)}
+\NormalTok{Top10UserKoordinaten\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{graph\_from\_data\_frame}\NormalTok{(Top10UserKoordinaten\_Matrix, }\AttributeTok{directed =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\#Hinzufügen von Attributen zu den Knoten und Kanten}
+\NormalTok{Top10UserKoordinaten\_Netzwerk }\OtherTok{\textless{}{-}} \FunctionTok{set\_edge\_attr}\NormalTok{(Top10UserKoordinaten\_Netzwerk, }\StringTok{"gewichtung"}\NormalTok{, }\AttributeTok{value =}\NormalTok{ gewichtung3)}
+
+
+
+\CommentTok{\#Plotten des Graphen}
+\FunctionTok{plot}\NormalTok{(Top10UserKoordinaten\_Netzwerk,}
+        \CommentTok{\#Layout des Graphen }
+        \AttributeTok{layout =}\NormalTok{ layout.auto,}
+        \CommentTok{\#Kanten Dicke und Farbe der Kanten bestimmen}
+        \AttributeTok{edge.width =} \FunctionTok{E}\NormalTok{(Top10UserKoordinaten\_Netzwerk)}\SpecialCharTok{$}\NormalTok{gewichtung}\SpecialCharTok{/}\DecValTok{4}\NormalTok{,}
+        \CommentTok{\#Zufällige Farben fü die Edges auswählen, um die Kanten besser zu unterscheiden}
+        \AttributeTok{edge.color =} \FunctionTok{sample}\NormalTok{(}\FunctionTok{colors}\NormalTok{(), }\FunctionTok{ecount}\NormalTok{(Top10UserKoordinaten\_Netzwerk)),}
+        \AttributeTok{vertex.color =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{V}\NormalTok{(Top10UserKoordinaten\_Netzwerk)}\SpecialCharTok{$}\NormalTok{name) }\SpecialCharTok{\textless{}=} \DecValTok{16}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"blue"}\NormalTok{),}
+        \AttributeTok{vertex.label.color =} \StringTok{"white"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SNA-Abgabe_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\section{Interpretation der Ergebnisse und Beantwortung der
+Forschungsfrage}\label{interpretation-der-ergebnisse-und-beantwortung-der-forschungsfrage}
+
+\end{document}
