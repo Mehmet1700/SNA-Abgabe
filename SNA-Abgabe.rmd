@@ -709,8 +709,8 @@ plot(Top10UserKoordinaten_Netzwerk,
         edge.color = sample(colors(), ecount(Top10UserKoordinaten_Netzwerk)),
         vertex.color = ifelse(as.numeric(V(Top10UserKoordinaten_Netzwerk)$name)
           <= 16, "red", "blue"),
-        vertex.label.color = "white",
-        vertex.label.size = 0.5)
+        vertex.label.color = "black",
+        vertex.label.size = 0.6)
 ```
 
 <br> <br>
@@ -745,30 +745,25 @@ Daher können nur Vermutungen angestellt werden.
 ## Beantwortung der Forschungsfrage
 Die zu Beginn gestellten Forschungsfragen sollen nun beantwortet werden.
 
-* Sind Muster zu erkennen und in welchen Bereichen der Leinwand sind diese Muster zu erkennen?
+Sind Muster zu erkennen und in welchen Bereichen der Leinwand sind diese Muster zu erkennen?
   
-Auf der Leinwand sind viele Muster zu erkennen. 
-Das soziale Experiment hat gezeigt, dass die Teilnehmer einander beeinflussen, aber dennoch Ideen von Bildern und Mustern umgesetzt werden können.
-Diese Muster sind auf der Leinwand zu erkennen.
+* Auf der Leinwand sind viele Muster zu erkennen.Das soziale Experiment hat gezeigt, dass die Teilnehmer einander beeinflussen, aber dennoch Ideen von Bildern und Mustern umgesetzt werden können. Diese Muster sind auf der Leinwand zu erkennen.
 
-* Welche Bereiche der Leinwand wurden besonders oft gefüllt?
+Welche Bereiche der Leinwand wurden besonders oft gefüllt?
 
-Die Visualisierung mit der Heatmap veranschaulicht sehr gut die Bereiche, welche sehr oft gefüllt worden sind.
-Diese Bereiche werden in rot dargestellt.
+* Die Visualisierung mit der Heatmap veranschaulicht sehr gut die Bereiche, welche sehr oft gefüllt worden sind. Diese Bereiche werden in rot dargestellt.
 
-* Welche Farben haben die aktivsten Nutzer besonders oft genutzt?
+Welche Farben haben die aktivsten Nutzer besonders oft genutzt?
 
-Die Farben der aktivsten Nutzer sind sehr unterschiedlich, aber es gibt einige Farben, welche besonders oft genutzt worden sind.
-Die Farbe Blau,Schwarz und Weiß (In der Abbildung als Pink dargestellt) sind besonders oft genutzt worden.
+* Die Farben der aktivsten Nutzer sind sehr unterschiedlich, aber es gibt einige Farben, welche besonders oft genutzt worden sind. Die Farbe Blau,Schwarz und Weiß (In der Abbildung als Pink dargestellt) sind besonders oft genutzt worden.
 
-* Welche Bereiche haben die aktivsten Nutzer besonders oft gefüllt?
+Welche Bereiche haben die aktivsten Nutzer besonders oft gefüllt?
 
-Die Bereiche, welche die aktivsten Nutzer besonders oft gefüllt haben, sind die Bereiche 14, 12 und 16.
+* Die Bereiche, welche die aktivsten Nutzer besonders oft gefüllt haben, sind die Bereiche 14, 12 und 16.
 
-* Gibt es generell Beziehungen zwischen den Nutzern?
+Gibt es generell Beziehungen zwischen den Nutzern?
 
-Generell können Beziehungen zwischen den Nutzern erkannt werden, allerdings sind dies nur Indizien.
-Eine eindeutige Bestätigung ist nicht möglich.
+* Generell können Beziehungen zwischen den Nutzern erkannt werden, allerdings sind dies nur Indizien. Eine eindeutige Bestätigung ist nicht möglich.
 
 <br> <br>
 
