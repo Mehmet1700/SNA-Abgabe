@@ -177,13 +177,13 @@ den Nutzern sind und wie die Nutzer sich verhalten.
 \CommentTok{\#Installieren der benötigten Packages}
 
 \CommentTok{\#install.packages("tidyverse")}
-\CommentTok{\#install.packages("ggraph")}
 \CommentTok{\#install.packages("ggplot2")}
+\CommentTok{\#install.packages("igraph")}
 
 \CommentTok{\#Laden der benötigten Packages}
 \CommentTok{\#library(tidyverse)}
-\CommentTok{\#library(ggraph)}
 \CommentTok{\#library(ggplot2)}
+\CommentTok{\#library(igraph)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -277,63 +277,20 @@ Datensatz}\label{erster-uxfcberblick-uxfcber-den-datensatz}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\#Leider kommt es zu Fehlermeldungen Konflikten mit anderen Packages,}
+\CommentTok{\#welche in der PDF angezeigt werden.}
+\CommentTok{\#Um dies zu vermeiden, werden diese unterdrückt.}
+
+\FunctionTok{suppressMessages}\NormalTok{(}\FunctionTok{library}\NormalTok{(igraph))}
 \CommentTok{\#install.packages("igraph")}
 \FunctionTok{library}\NormalTok{(igraph)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## 
-## Attaching package: 'igraph'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:base':
-## 
-##     union
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\FunctionTok{suppressMessages}\NormalTok{(}\FunctionTok{library}\NormalTok{(tidyverse))}
 \CommentTok{\#install.packages("tidyverse")}
 \FunctionTok{library}\NormalTok{(tidyverse)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
-## v dplyr     1.1.3     v readr     2.1.4
-## v forcats   1.0.0     v stringr   1.5.0
-## v ggplot2   3.4.4     v tibble    3.2.1
-## v lubridate 1.9.3     v tidyr     1.3.0
-## v purrr     1.0.2
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x lubridate::%--%()      masks igraph::%--%()
-## x dplyr::as_data_frame() masks tibble::as_data_frame(), igraph::as_data_frame()
-## x purrr::compose()       masks igraph::compose()
-## x tidyr::crossing()      masks igraph::crossing()
-## x dplyr::filter()        masks stats::filter()
-## x dplyr::lag()           masks stats::lag()
-## x purrr::simplify()      masks igraph::simplify()
-## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{\#install.packages(ggplot2)}
-\CommentTok{\#library(ggplot2)}
-
-\CommentTok{\#install.packages("dplyr")}
-\CommentTok{\#library(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -527,7 +484,6 @@ wird im nächsten Schritt die Grafik mit ggplot2 geplottet.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{ (ggplot2)}
 \CommentTok{\#Plotten der Grafik in ggplot}
 \FunctionTok{ggplot}\NormalTok{(Koordinaten\_subset\_eindeutig, }\FunctionTok{aes}\NormalTok{(x, y, }\AttributeTok{col =}\NormalTok{ farbzuordnung[pixel\_color])) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{15}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.4}\NormalTok{) }\SpecialCharTok{+}

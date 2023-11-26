@@ -19,10 +19,7 @@ editor_options:
 ---
 
 <br>
-<br>
-<br>
-<br>
-<br>
+
 
 # Einleitung {#sec-einleitung}
 
@@ -63,13 +60,14 @@ Außerdem ist es interessant zu untersuchen, wie die Beziehungen zwischen den Nu
 #Installieren der benötigten Packages
 
 #install.packages("tidyverse")
-#install.packages("ggraph")
 #install.packages("ggplot2")
+#install.packages("igraph")
 
 #Laden der benötigten Packages
 #library(tidyverse)
-#library(ggraph)
 #library(ggplot2)
+#library(igraph)
+
 ```
 
 <br> <br>
@@ -146,17 +144,22 @@ data <- as.data.frame(data)
 <br> <br>
 
 ```{r}
+#Leider kommt es zu Fehlermeldungen Konflikten mit anderen Packages,
+#welche in der PDF angezeigt werden.
+#Um dies zu vermeiden, werden diese unterdrückt.
+
+suppressMessages(library(igraph))
 #install.packages("igraph")
 library(igraph)
 
+suppressMessages(library(tidyverse))
 #install.packages("tidyverse")
 library(tidyverse)
 
 #install.packages(ggplot2)
-#library(ggplot2)
+library(ggplot2)
 
-#install.packages("dplyr")
-#library(dplyr)
+
 ```
 
 <br> <br>
@@ -292,7 +295,6 @@ Daher wird im nächsten Schritt die Grafik mit ggplot2 geplottet.
 <br> <br>
 
 ```{r}
-library (ggplot2)
 #Plotten der Grafik in ggplot
 ggplot(Koordinaten_subset_eindeutig, aes(x, y, col = farbzuordnung[pixel_color])) +
   geom_point(shape = 15, size = 0.4) +
