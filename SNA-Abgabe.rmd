@@ -304,134 +304,9 @@ ggplot(Koordinaten_subset_eindeutig, aes(x, y, col = farbzuordnung[pixel_color])
 <br> <br>
 
 Diese Darstellung ist die präziseste Darstellung, die wir erstellen konnten. Es ist zu erkennen, dass die Flaggen deutlicher zu erkennen sind.
-Außerdem sind Sätze, Wörter und Logos zu erkennen. Aber auch Andeutung von Bildern wie z.B. ein blauer Elefant und ein "Pikachu" mit Sonnenbrille (Ein Pokemon aus dem gleichnamigen Spiel) sind der unteren rechten Ecke ist zu erkennen.
-Nun möchten wir den zeitlichen Verlauf der Pixel setzen lassen. Diesen möchten wir in Form eines gifs animieren, wie es in der Vorlesung gezeigt worden ist.
-Hierfür erstellen wir einen neuen Subset, welcher zusätzlich noch die Spalte timestamp enthält.
+Außerdem sind Sätze, Wörter und Logos zu erkennen.
+Aber auch Andeutung von Bildern wie z.B. ein blauer Elefant und ein "Pikachu" mit Sonnenbrille (Ein Pokemon aus dem gleichnamigen Spiel) sind der unteren rechten Ecke ist zu erkennen.
 
-<br> <br>
-
-```{r}
-#Erstellen eines neuen Subsets, welches aus den Koordinatenpaaren, dem pixelcolor 
-#und dem timestamp besteht
-Koordinaten_subset_x_y_pixelcolor_timestamp <- data.frame(x=data$x, y=data$y,
-  pixel_color=data$pixel_color, timestamp=data$timestamp)
-
-#Der Subset wird nach dem timestamp sortiert und bekommt einen Index 
-#mit 1 beginnend zugewiesen
-Koordinaten_subset_x_y_pixelcolor_timestamp <- Koordinaten_subset_x_y_pixelcolor_timestamp[
-  order(Koordinaten_subset_x_y_pixelcolor_timestamp$timestamp),]
-  
-Koordinaten_subset_x_y_pixelcolor_timestamp$index <- seq.int(nrow
-(Koordinaten_subset_x_y_pixelcolor_timestamp))
-
-#Der subset wird als Grafik in ggplot dargestellt, um diese später als gif zu animieren
-Koordinaten_subset_x_y_pixelcolor_timestamp_grafik <-
-ggplot(Koordinaten_subset_x_y_pixelcolor_timestamp ,
-aes(x, y, col = farbzuordnung[pixel_color])) +
-  geom_point(shape = 15, size = 0.5) +
-  scale_color_identity() +
-  theme_minimal() +
-  labs(title = "Zeitlicher Verlauf der Pixel", x = "X-Achse", y = "Y-Achse", col = "Farbe") +
-  transition_states(index, transition_length = 2, state_length = 1) +
-  enter_fade() +
-  exit_fade()
-
-# Animation speichern
-anim_save("animation.gif", Koordinaten_subset_x_y_pixelcolor_timestamp_grafik)
-
-
-
-#Anzeigen der Grafik zum testen. Das fertige gif wird unten erstellt und 
-#als seperate Datei zur Abgabe bereitgestellt.
-#Koordinaten_subset_x_y_pixelcolor_timestamp_grafik
-```
-
-<br> <br>
-
-```{r}
-#Wir importieren Biblotheken, welche uns beim erstellen des gifs helfen.
-
-library(gapminder)
-library(ggplot2)
-library(gganimate)
-install.packages("gifski")
-library(gifski)
-
-```
-
-<br> <br>
-
-Da wir diese nun importiert haben, können wir das gif erstellen.
-Aus der Grafik wird ein gif erstellt.
-Hierzu wird nacheinander in Reihenfolge des Index angezeigt. 
-Nachdem ein Pixel gesetzt worden ist, wird der Index um 1 erhöht und der nächste Pixel wird gesetzt.
-Dies wird so lange wiederholt, bis alle Pixel gesetzt worden sind.
-Dieser Prozess wird in 200 Frames mit einer Framerate von 5 fps dargestellt.
-Kein Pixel darf nach dem Setzen verschwinden oder sich bewegen, sondern bleibt bis zum Ende bestehen.
-
-<br> <br>
-
-
-```{r}
-# Erstelle eine Animation
-animation <- Koordinaten_subset_x_y_pixelcolor_timestamp %>%
-  ggplot(aes(x, y, col = farbzuordnung[pixel_color])) +
-  geom_point(shape = 15, size = 0.5) +
-  scale_color_identity() +
-  theme_minimal() +
-  labs(title = "Zeitlicher Verlauf der Pixel", x = "X-Achse", y = "Y-Achse", col = "Farbe") +
-  transition_states(index, transition_length = 2, state_length = 1) +
-  enter_fade() +
-  exit_fade()
-
-
-#Rendererer der Animation
-
-# Speichere die Animation als GIF
-anim_save("animation.gif", animation)
-
-
-animation%>% image_write("Animation.gif")
-
-```
-
-```{r}
-
-# Erstelle eine Animation mit gganimate
-animation <- Koordinaten_subset_x_y_pixelcolor_timestamp %>%
-  ggplot(aes(x, y, col = farbzuordnung[pixel_color])) +
-  geom_point(shape = 15, size = 0.5) +
-  scale_color_identity() +
-  theme_minimal() +
-  labs(title = "Zeitlicher Verlauf der Pixel", x = "X-Achse", y = "Y-Achse", col = "Farbe") +
-  transition_states(index, transition_length = 1, state_length = 1) +
-  enter_fade() +
-  exit_fade()
-
-#Anzeigen des gifs zum testen
-#animation
-
-# Speichere die Animation in einer Datei (z.B., gif)
-anim_save("animation123.gif", animation)
-```
-
-<br> <br>
-
-```{r}
-
-#Da die Darstellung eines beweglichen gifs in einem PDF-Dokument schwierig ist
-# und aus Performance Gründen, wurde die Funktion des gif erstellens auskommentiert,
-# aber die gif ist in der Abgabe beigefügt.
-```
-
-<br> <br>
-
-Diese Darstellung gibt uns sehr schön den Verlauf des Prozesses dar. Zu Beginn der Veranstaltung gibt 
-es gewisse Bereiche, welche sehr schnell gefüllt worden sind.
-Diese Bereiche wurden von den dementsprechenden Ländergruppen (z.B. Deutschland, Frankreich, Türkei) 
-versucht zu füllen, sodass die Flagge des Landes entsteht. Im weiteren Verlauf des Prozesses wurden
-die Länderflaggen immer weiter ausgebaut und es wurden neue Länderflaggen hinzugefügt. Das Bild 
-der jeweiligen Länder wurde deutlicher und deutlicher.
 
 <br> <br>
 
@@ -517,25 +392,28 @@ ifelse(häufigkeit_tabelle$Anzahl < 350, "orange", "red"))))
 
 #Legende erstellen für die Heatmap
 Legenden_Daten <- data.frame(Farbe = unique(häufigkeit_tabelle$Farbe),
-                      Bedeutung = c(">350", "<350", "<50", "<10"))
+                      Bedeutung = c(">350", "<350", "<50", "<10", "0"))
+
+````
+
+<br> <br>
+
+```{r}
 
 #Nun erstellen wir einen Plot, welcher die X-Achse und Y-Achse
 #der Koordinatenpaare mit ihrer Farbe darstellt.
-Koordinaten_subset_x_y_heatmap_tabelle_grafik <- ggplot(häufigkeit_tabelle,
-  aes(X, Y, col = Farbe)) +
-  geom_point(shape = 15, size = 0.5) +
-  scale_color_manual(values = as.character(häufigkeit_tabelle$Farbe),
-  labels = Legenden_Daten$Bedeutung) +
-  theme_minimal() +
+Koordinaten_subset_x_y_heatmap_tabelle_grafik <- ggplot(
+  häufigkeit_tabelle,aes(X, Y, col = Farbe)) + 
+  geom_point(shape = 15, size = 0.5) + scale_color_manual(values = as.character(häufigkeit_tabelle$Farbe),
+  labels = Legenden_Daten$Bedeutung) + theme_minimal() +
   theme(axis.title = element_blank(), axis.text = element_blank(),
-        axis.line = element_blank(), axis.ticks = element_blank()) +
+  axis.line = element_blank(), axis.ticks = element_blank()) +
   labs(title = "Heatmap Anzahl Platzierungen", col = "Farbe") +
   guides(col = guide_legend(title = "Legende"))
 
 
 #Anzeigen der Grafik
 Koordinaten_subset_x_y_heatmap_tabelle_grafik
-
 ```
 
 <br> <br>
